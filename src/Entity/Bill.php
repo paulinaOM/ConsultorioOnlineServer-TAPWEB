@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\BillRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=BillRepository::class)
+ */
+class Bill
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="MedicalConsultation", inversedBy="bill")
+     * @ORM\JoinColumn(name="id_consultation", referencedColumnName="id")
+     */
+    private $medicalConsultation;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $filename;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdConsultation(): ?MedicalConsultation
+    {
+        return $this->medicalConsultation;
+    }
+
+    public function setIdConsultation(?MedicalConsultation $id_consultation): self
+    {
+        $this->medicalConsultation = $id_consultation;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+}
